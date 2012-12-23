@@ -1,0 +1,7 @@
+- @search_results.each do |item|
+  %h2= item.name('en')
+  %p
+    = item.content
+  - item.images.each do |image|
+    %a{:href => "/pages/#{item.id}/images/#{image.identifier}"}
+      %img{:src => image.thumbnail_url, :title => image.title}

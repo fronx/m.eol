@@ -1,0 +1,8 @@
+%h1= @page.name('en')
+#slider
+  - @page.images.each_with_index do |image, index|
+    %li{:style => "display:#{index == 0 ? 'block' : 'none'}"}
+      %a{:href => image.source_url}
+        %img{:src => image.url, :title => image.title, :height => '500px'}
+      %p
+        = image.description

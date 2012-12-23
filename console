@@ -1,0 +1,2 @@
+#!/bin/bash
+foreman run bundle exec irb -I lib
