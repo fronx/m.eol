@@ -1,6 +1,5 @@
 source :rubygems
 
-gem 'thin' # required on the production machine
 gem 'rack'
 gem 'sinatra', '>= 1.3.2'
 gem 'haml'
