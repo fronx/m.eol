@@ -11,6 +11,6 @@
     <script type="text/javascript" src="/js/code.photoswipe-3.0.5.min.js"></script>
     %script{:type => 'text/javascript', :src => '/js/app.js'}
   %body
-    %form{:action => @search_action || '/search/list'}
+    %form{:action => @search_action || '/search/grid'}
       <input type=search name=q results=5 autosave="m.eol/search" value="#{params[:q]}" autofocus>
     = yield

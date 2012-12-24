@@ -17,6 +17,7 @@ class App < Sinatra::Base
   end
 
   get '/search/list' do
+    @search_action = '/search/list'
     if params[:q]
       @search_results = eol.search(params[:q], {:images => 30, :text => 1})
       haml :search_list
@@ -26,7 +27,6 @@ class App < Sinatra::Base
   end
 
   get '/search/grid' do
-    @search_action = '/search/grid'
     if params[:q]
       @search_results = eol.search(params[:q], {:images => 3, :text => 0})
       haml :search_grid
