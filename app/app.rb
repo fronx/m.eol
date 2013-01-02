@@ -2,6 +2,8 @@ require 'sinatra/base'
 require 'eol/core_ext'
 require 'eol/api'
 require 'eol/page'
+require 'view_helpers/view_mode'
+require 'view_helpers/route'
 
 class App < Sinatra::Base
   set :views, './app/views'
@@ -10,29 +12,44 @@ class App < Sinatra::Base
     @eol ||= Eol::Api.new
   end
 
+  ROUTES = {
+    :search => Route.new("/search/:mode"),
+  }
+
+  VIEWS = {
+    :search => ViewMode.new(%w[ list grid ]),
+  }
+
+  def init_search(mode, search_params={})
+    next_mode = VIEWS[:search].at(mode).next
+    @search_action = ROUTES[:search].to_s(:mode => mode)
+    @toggle_link = {
+      :href => ROUTES[:search].to_s(:mode => next_mode, :q => params[:q]),
+      :next_mode => next_mode,
+    }
+    if params[:q]
+      @search_results = eol.search(params[:q], search_params)
+      @template = :"search_#{mode}"
+    else
+      @template = :index
+    end
+  end
+
   # HTML ------------------------------ #
 
   get '/' do
-    haml :index
+    init_search('list', {:images => 30, :text => 1})
+    haml @template
   end
 
   get '/search/list' do
-    @search_action = '/search/list'
-    if params[:q]
-      @search_results = eol.search(params[:q], {:images => 30, :text => 1})
-      haml :search_list
-    else
-      haml :index
-    end
+    init_search('list', {:images => 30, :text => 1})
+    haml @template
   end
 
   get '/search/grid' do
-    if params[:q]
-      @search_results = eol.search(params[:q], {:images => 3, :text => 0})
-      haml :search_grid
-    else
-      haml :index
-    end
+    init_search('grid', {:images => 3, :text => 0})
+    haml @template
   end
 
   get '/pages/:id' do

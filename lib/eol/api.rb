@@ -25,7 +25,7 @@ module Eol
     def search(query, page_params={}, limit=nil)
       SearchResults.new(
         self,
-        get("search/1.0.json", { :q => query }),
+        get("search/1.0.json", { :q => query }).debug('get:search'),
         page_params,
         limit
       )

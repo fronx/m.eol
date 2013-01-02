@@ -2,15 +2,17 @@
 %html
   %head
     %title m.eol
-    %link{:href => '/css/base.less', :type => "text/css", :rel => "stylesheet/less"}
+    %link{:href => "/css/base.less?v=#{Time.now.to_i if debug?}", :type => "text/css", :rel => "stylesheet/less"}
     %link{:href => '/css/photoswipe.css', :type => "text/css", :rel => "stylesheet"}
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
     %script{:type => 'text/javascript', :src => '/js/less.js'}
-    / %script{:type => 'text/javascript', :src => '/js/underscore.js'}
-    <script type="text/javascript" src="/js/klass.min.js"></script>
-    <script type="text/javascript" src="/js/code.photoswipe-3.0.5.min.js"></script>
-    %script{:type => 'text/javascript', :src => '/js/app.js'}
+    <script type="text/javascript">JSCLASS_PATH = '/js/jsclass/min'</script>
+    <script type="text/javascript" src="/js/jsclass/min/package-browser.js"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
   %body
-    %form{:action => @search_action || '/search/grid'}
-      <input type=search name=q results=5 autosave="m.eol/search" value="#{params[:q]}" autofocus>
+    %form.search{:action => @search_action || '/search/grid'}
+      %a.view_mode{:href => @toggle_link[:href]}
+        %i{:class => "img-#{@toggle_link[:next_mode]}"}
+      .search-box
+        <input type=search name=q results=5 autosave="m.eol/search" value="#{params[:q]}" autofocus>
     = yield
