@@ -14,6 +14,7 @@ class App < Sinatra::Base
 
   ROUTES = {
     :search => Route.new("/search/:mode"),
+    :page   => Route.new("/pages/:id"),
   }
 
   VIEWS = {
@@ -53,12 +54,12 @@ class App < Sinatra::Base
   end
 
   get '/pages/:id' do
-    @page = Eol::Page.load(eol, params[:id], {:images => 1000, :text => 30})
+    @page = Eol::Page.load(eol, params[:id], {:images => 100, :text => 2})
     haml :page
   end
 
   get '/pages/:id/images/:image_identifier' do
-    @page = Eol::Page.load(eol, params[:id], {:images => 1000, :text => 0})
+    @page = Eol::Page.load(eol, params[:id], {:images => 100, :text => 0})
     @image = @page.image_by_id(params[:image_identifier])
     haml :image
   end

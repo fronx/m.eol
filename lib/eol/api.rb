@@ -17,7 +17,7 @@ module Eol
     def initialize()
       @http = Faraday.new('http://eol.org/api/') do |conn|
         conn.request :url_encoded
-        conn.response :logger
+        (conn.response :logger) if debug?
         conn.adapter :typhoeus
       end
     end
@@ -50,3 +50,19 @@ module Eol
     end
   end
 end
+
+<<'RUBY'
+require 'pp'
+require 'eol/api'
+api = Eol::Api.new
+r = api.search('gorilla'); nil
+r.items.group_by(&:path)
+
+e = r.items.last
+e.hierarchy_entries
+e.hierarchy_entries.first.str_path
+
+r.items.each do |item|
+  puts item.hierarchy_entries.first.str_path.inspect
+end; nil
+RUBY

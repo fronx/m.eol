@@ -1,8 +1,10 @@
 %h1= @page.name('en')
-#slider
+%ul.swipe-gallery
   - @page.images.each_with_index do |image, index|
-    %li{:style => "display:#{index == 0 ? 'block' : 'none'}"}
-      %a{:href => image.source_url}
-        %img{:src => image.url, :title => image.title, :height => '500px'}
+    %li.medium
+      %a.img{:href => image.url}
+        %img{:src => image.thumbnail_url(:medium), :title => image.title}
       %p
         = image.description
+      - if image.source_url
+        %a{:href => image.source_url} source

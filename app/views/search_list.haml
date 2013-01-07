@@ -1,10 +1,12 @@
 .search-results.search-list
-  %ul#swipe-gallery
+  %ul.swipe-gallery
     - @search_results.each do |item|
       %li
-        %h2= item.name('en')
+        %h2
+          %a{:href => ROUTES[:page].to_s(:id => item.identifier)}
+            = item.name('en')
         %p
           = item.content
         - item.images.each do |image|
-          %a{:href => image.url}
-            %img{:src => image.thumbnail_square_url, :title => image.title, :alt => item.name('en')}
+          %a.img{:href => image.url}
+            %img{:src => image.thumbnail_url(:square), :title => image.title, :alt => item.name('en')}

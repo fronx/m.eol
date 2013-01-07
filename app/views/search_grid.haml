@@ -3,5 +3,5 @@
     - @search_results.each do |item|
       - item.images.each do |image|
         %li
-          %a{:href => image.url}
-            %img{:src => image.thumbnail_square_url, :alt => item.name('en')}
+          %a.img{:href => image.url}
+            %img{:src => image.thumbnail_url(:square), :alt => item.name('en')}

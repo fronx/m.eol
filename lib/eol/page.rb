@@ -1,6 +1,7 @@
 require 'eol/data_object'
 require 'eol/data_types'
 require 'eol/image'
+require 'eol/hierarchy_entry'
 
 module Eol
   class Page
@@ -24,22 +25,33 @@ module Eol
 
     # returns a hash
     def self.multi_load(api, ids, params)
-      api.multi_get(
-        ids.map { |id| path(id) }, EMPTY_PARAMS.merge(params)
-      ).map do |json|
-        Page.new(json)
-      end
+      pages =
+        api.multi_get(
+          Array(ids).map { |id| path(id) }, EMPTY_PARAMS.merge(params)
+        ).map do |json|
+          Page.new(api, json)
+        end
+      HierarchyEntry.multi_load_for_pages!(api, pages)
+      pages
     end
 
     def self.load(api, id, params)
       Page.new(
+        api,
         api.get(path(id), EMPTY_PARAMS.merge(params))
       )
     end
 
-    attr_reader :identifier, :scientific_name, :richness_score, :data_objects
+    attr_reader :identifier,
+                :scientific_name,
+                :richness_score,
+                :data_objects,
+                :hierarchy_entry,
+                :raw
 
-    def initialize(page)
+    def initialize(api, page)
+      @api = api
+      @raw = page
       @identifier       = page['identifier'] # same as search item id
       @scientific_name  = page['scientificName']
       @richness_score   = page['richness_score']
@@ -53,6 +65,7 @@ module Eol
             DataObject.new(json)
           end
         end
+      @taxon_concepts = page['taxonConcepts']
     end
 
     def images
@@ -75,6 +88,37 @@ module Eol
             (name_hash['eol_preferred'] == true)
         end
       result['vernacularName'] if result
+    end
+
+    def taxon_concept_id
+      @taxon_concepts.first['identifier']
+    end
+
+    def hierarchy_entries
+      HierarchyEntry.multi_load(
+        @api,
+        @taxon_concepts.map { |tc| tc['identifier'] }
+      )
+    end
+
+    def hierarchy_entry=(entry)
+      @hierarchy_entry = entry
+    end
+
+    def hierarchy_entry
+      @hierarchy_entry ||=
+        HierarchyEntry.load(
+          @api,
+          @taxon_concepts.first['identifier']
+        )
+    end
+
+    def path
+      @hierarchy_entry.path
+    end
+
+    def str_path
+      @hierarchy_entry.str_path
     end
 
     def name(lang)

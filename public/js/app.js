@@ -10,7 +10,7 @@ JS.Packages(function() { with(this) {
 document.addEventListener('DOMContentLoaded', function(){
     JS.require('Code.PhotoSwipe', function() {
         var swipe = Code.PhotoSwipe.attach(
-                window.document.querySelectorAll('#swipe-gallery a'),
+                window.document.querySelectorAll('.swipe-gallery a.img'),
                 { allowUserZoom: true
                 , captionAndToolbarOpacity: 0.6
                 , minUserZoom: 1.0
