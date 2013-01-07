@@ -58,7 +58,8 @@ module Eol
     def images
       @data_objects.select do |data_object|
         data_object.data_type == DataTypes.image
-      end
+      end.
+        uniq(&:url).debug("images")
     end
 
     def image_by_id(id)

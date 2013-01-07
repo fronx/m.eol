@@ -1,8 +1,10 @@
 .search-results.search-list
-  - @search_results.each do |item|
-    %h2= item.name('en')
-    %p
-      = item.content
-    - item.images.each do |image|
-      %a{:href => "/pages/#{item.id}/images/#{image.identifier}"}
-        %img{:src => image.thumbnail_url, :title => image.title}
+  %ul#swipe-gallery
+    - @search_results.each do |item|
+      %li
+        %h2= item.name('en')
+        %p
+          = item.content
+        - item.images.each do |image|
+          %a{:href => image.url}
+            %img{:src => image.thumbnail_square_url, :title => image.title, :alt => item.name('en')}

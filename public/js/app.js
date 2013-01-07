@@ -1,11 +1,8 @@
 JS.Packages(function() { with(this) {
-    file('/js/klass.min.js')
-        .provides('klass');
-
-    file('/js/code.photoswipe-3.0.5.min.js')
+    file('/js/klass.min.js',
+         '/js/code.photoswipe-3.0.5.min.js')
         .provides('Code.Util')
-        .provides('Code.PhotoSwipe')
-        .uses('klass');
+        .provides('Code.PhotoSwipe');
 }});
 
 // window.mySwipe = new Swipe(document.getElementById('slider'));
