@@ -1,7 +1,7 @@
 .search-results.search-list
   %ul.swipe-gallery
     - @search_results.each do |item|
-      %li
+      %li.search-result
         %h2
           %a{:href => ROUTES[:page].to_s(:id => item.identifier)}
             = item.name('en')
