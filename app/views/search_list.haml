@@ -5,8 +5,7 @@
         %h2
           %a{:href => ROUTES[:page].to_s(:id => item.identifier)}
             = item.name('en')
-        %p
-          = item.content
+        / %p= item.content
         - item.images.each do |image|
           %a.img{:href => image.url}
             %img{:src => image.thumbnail_url(:square), :title => image.title, :alt => item.name('en')}

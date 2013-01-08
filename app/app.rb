@@ -24,6 +24,7 @@ class App < Sinatra::Base
   def init_search(mode, search_params={})
     next_mode = VIEWS[:search].at(mode).next
     @search_action = ROUTES[:search].to_s(:mode => mode)
+    @q = params[:q]
     @toggle_link = {
       :href => ROUTES[:search].to_s(:mode => next_mode, :q => params[:q]),
       :next_mode => next_mode,
@@ -54,13 +55,11 @@ class App < Sinatra::Base
   end
 
   get '/pages/:id' do
+    @q =
+      if request.referer && (query = URI.parse(request.referer).query)
+        Hash[URI.decode_www_form(query)]['q']
+      end
     @page = Eol::Page.load(eol, params[:id], {:images => 100, :text => 2})
     haml :page
-  end
-
-  get '/pages/:id/images/:image_identifier' do
-    @page = Eol::Page.load(eol, params[:id], {:images => 100, :text => 0})
-    @image = @page.image_by_id(params[:image_identifier])
-    haml :image
   end
 end

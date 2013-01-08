@@ -1,3 +1,5 @@
+%a{:href => request.referer || @search_action || '/search/list'}
+  back
 %h1= @page.name('en')
 %ul.swipe-gallery
   - @page.images.each_with_index do |image, index|

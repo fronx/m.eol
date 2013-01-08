@@ -126,3 +126,11 @@ module Eol
     end
   end
 end
+
+<<'RUBY'
+require 'eol/api'
+require 'eol/page'
+
+page = Eol::Page.load(Eol::Api.new, 326447, {:text => 2})
+
+RUBY
