@@ -14,5 +14,6 @@
       %form.search{:action => @search_action || '/search/list'}
         .search-box
           <input type=search name=q results=5 autosave="m.eol/search" value="#{@q}" autofocus>
+        = haml :langs, {}, :langs => LANGS
     = yield
 

@@ -21,6 +21,15 @@ class App < Sinatra::Base
     :search => ViewMode.new(%w[ list ]),
   }
 
+  LANGS = %w[ en de fr ru es ]
+
+  COOKIE_LANGS = 'm.eol__langs'
+
+  def init_lang
+    @langs = request.cookies[COOKIE_LANGS].to_s.split('|').compact
+    @langs = %w[ en ] if @langs.empty?
+  end
+
   def init_search(mode, search_params={})
     next_mode = VIEWS[:search].at(mode).next
     @search_action = ROUTES[:search].to_s(:mode => mode)
@@ -40,16 +49,19 @@ class App < Sinatra::Base
   # HTML ------------------------------ #
 
   get '/' do
+    init_lang
     init_search('list', {:images => 30, :text => 1})
     haml @template
   end
 
   get '/search/list' do
+    init_lang
     init_search('list', {:images => 30, :text => 1})
     haml @template
   end
 
   get '/pages/:id' do
+    init_lang
     @q =
       if request.referer && (query = URI.parse(request.referer).query)
         Hash[URI.decode_www_form(query)]['q']

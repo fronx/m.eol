@@ -1,7 +1,8 @@
 %a{:href => request.referer || @search_action || '/search/list'}
   back
 .page
-  %h1= @page.name('en')
+  %h1
+    = haml :names, {}, :item => @page
   %ul.swipe-gallery
     - @page.images.each_with_index do |image, index|
       %li.medium

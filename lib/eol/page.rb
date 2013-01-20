@@ -137,8 +137,17 @@ module Eol
       @hierarchy_entry.str_path
     end
 
-    def name(lang)
-      vernacular_name(lang) || scientific_name
+    def names(langs, separator=nil)
+      result = langs.map do |lang|
+        name = vernacular_name(lang)
+        if name && block_given?
+          yield(name, lang)
+        else
+          name
+        end
+      end.compact
+      result = [ scientific_name ] if result.empty?
+      separator ? result.join(separator) : result
     end
   end
 end

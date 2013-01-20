@@ -8,8 +8,7 @@ module Eol
                            :scientific_name,
                            :data_objects,
                            :images,
-                           :vernacular_name,
-                           :name,
+                           :names,
                            :path,
                            :str_path,
                            :hierarchy_entry,
@@ -19,7 +18,6 @@ module Eol
     attr_reader :id,
                 :title,
                 :content,
-                :scientific_name,
                 :raw
 
     DEFAULT_IMAGE_COUNT = 7

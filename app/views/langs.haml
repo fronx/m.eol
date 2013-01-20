@@ -1,0 +1,5 @@
+- Array(langs).each do |lang|
+  - if @langs.include?(lang)
+    %a.lang.active{:class => lang, :href => '', :onClick => %Q{document.cookie="#{COOKIE_LANGS}=#{(@langs - [ lang ]).join('|')}; document.location.reload(true);"}}= lang
+  - else
+    %a.lang.inactive{:class => lang, :href => '', :onClick => %Q{document.cookie="#{COOKIE_LANGS}=#{(@langs + [ lang ]).join('|')}"; document.location.reload(true);}}= lang

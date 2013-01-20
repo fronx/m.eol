@@ -1,0 +1,9 @@
+.rating{:title => "richness score: #{item.richness_score}"}
+  - active = (5*item.richness_score / 100).round
+  - inactive = 5 - active
+  - active.times do
+    %span.active☆
+  - inactive.times do
+    %span☆
+  &nbsp;
+  = item.richness_score.round(1)

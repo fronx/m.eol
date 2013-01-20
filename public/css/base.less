@@ -15,6 +15,7 @@ h2 {
   font-size: 18px;
   text-shadow: 0 1px 1px #222;
 }
+
 a {
   color: #eee;
   text-decoration: none;
@@ -33,13 +34,23 @@ img.logo {
   margin: 30px auto;
 }
 
-.top-bar {
-  background-color: #111;
+.top-bar { background-color: #111; }
+.top-bar .beside { float: right; padding: 4px; }
+.top-bar a.lang {
+  display: inline-block;
+  width: 44px;
+  height: 40px;
+  text-align: center;
+  padding: 10px 0;
+  background: #222;
+}
+a.lang.inactive {
+  color: #444;
 }
 
 form.search {
   padding: 5px;
-  height: 50px;
+  // height: 50px;
   display: block;
   margin: 0;
 }
@@ -54,7 +65,7 @@ input[type=search] {
   margin: 5px 0;
   font-size: 18px;
 }
-a.view_mode { float: right; padding: 4px; }
+
 a.img {
   margin: 0 5px 4px 0;
   display: block; float: left;
@@ -65,14 +76,12 @@ a.img {
   margin: 5px auto 0 auto;
   padding: 0;
 }
-
 .swipe-gallery li {
   text-indent: 0;
   margin: 0;
   padding: 8px;
   float: left;
 }
-
 .swipe-gallery li.medium {
   clear: none;
   // float: left;
@@ -139,16 +148,29 @@ li.search-result:last-child {
    position: absolute;
 }
 
-.search-result h2 {
-  margin: 0 0 7px 0;
-}
 .search-result .rating {
   float: right;
   margin-top: 4px;
   padding-right: 7px;
   font-size: 9px;
 }
-
+.names a.page {
+  font-size: 18px;
+  text-shadow: 0 1px 1px #222;
+  margin: 0 0 7px 0;
+}
+.names a.lang {
+  font-weight: normal;
+  text-shadow: none;
+  display: inline-block;
+  font-size: 10px;
+  line-height: 18px;
+  background: #666;
+  padding: 2px 5px;
+  margin: 0 10px 0 0;
+  top: -3px;
+  position: relative;
+}
 .tag {
   position: relative;
   display: inline-block;

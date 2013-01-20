@@ -1,0 +1,6 @@
+.names
+  - item.names(@langs) do |name, lang|
+    %a.page{:href => ROUTES[:page].to_s(:id => item.identifier)}
+      = name
+    %span.lang
+      = haml :langs, {}, :langs => lang
