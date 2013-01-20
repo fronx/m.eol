@@ -10,8 +10,9 @@ body {
   padding: 0;
   margin: 0;
 }
+
 h2 {
-  font-size: 16px;
+  font-size: 18px;
   text-shadow: 0 1px 1px #222;
 }
 a {
@@ -22,6 +23,14 @@ a {
 img {
   border: 1px solid #333;
   box-shadow: 1px 1px 10px #222;
+}
+img.logo {
+  border: 0;
+  box-shadow: none;
+}
+.index img.logo {
+  display: block;
+  margin: 30px auto;
 }
 
 .top-bar {
@@ -47,7 +56,7 @@ input[type=search] {
 }
 a.view_mode { float: right; padding: 4px; }
 a.img {
-  margin: 0 8px 8px 0;
+  margin: 0 5px 4px 0;
   display: block; float: left;
 }
 
@@ -65,13 +74,25 @@ a.img {
 }
 
 .swipe-gallery li.medium {
-  clear: both;
-  float: none;
+  clear: none;
+  // float: left;
 }
 
+.page {
+  overflow-x: scroll;
+}
+.page .swipe-gallery {
+  height: 250px; width: 20000px; overflow-y: hidden;
+}
+
+// page layout
 .search-results {
   padding: 0 0 0 8px;
 }
+.page {
+}
+// end page layout
+
 li.search-result {
   border-top: 1px solid #6b6b6b;
   border-bottom: 1px solid #3a3a3a;
@@ -89,17 +110,61 @@ li.search-result:last-child {
 }
 
 // .medium { width: 300px; height: 340px; overflow-x: hidden; overflow-y: scroll; }
-.medium img { margin: 0 auto; }
+// .medium { width: 320px; overflow-x: hidden; }
+.medium a.img, .medium p {
+  position: relative;
+  display: inline-block;
+  width: 320px;
+}
+.medium img { margin: 0 17px; border: 1px solid #111; }
 
 .img-list {
   display: block;
   width: 32px; height: 32px;
   background-image: url(/img/list-32px.png);
 }
-.img-grid {
-  display: block;
-  width: 32px; height: 32px;
-  background-image: url(/img/grid-32px.png);
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: ltr;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span.active:before,
+.rating > span:active ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
+
+.search-result h2 {
+  margin: 0 0 7px 0;
+}
+.search-result .rating {
+  float: right;
+  margin-top: 4px;
+  padding-right: 7px;
+  font-size: 9px;
+}
+
+.tag {
+  position: relative;
+  display: inline-block;
+  padding: 1px 4px 2px 4px;
+  background: #BFBFBF;
+  color: #111;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.image-list {
+  margin-top: 7px;
+}
+
+.image-list .only-in-gallery-mode {
+  display: none;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
@@ -107,11 +172,4 @@ li.search-result:last-child {
     background-image: url(/img/list-72px.png);
     background-size: 32px 32px;
   }
-  .img-grid {
-    background-image: url(/img/grid-72px.png);
-    background-size: 32px 32px;
-  }
-
-  .medium { width: 320px; overflow-x: hidden; }
-  .medium img { margin: 0 17px; border: 1px solid #111; }
 }

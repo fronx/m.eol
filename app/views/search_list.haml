@@ -2,10 +2,23 @@
   %ul.swipe-gallery
     - @search_results.each do |item|
       %li.search-result
+        .rating{:title => "richness score: #{item.richness_score}"}
+          - active = (5*item.richness_score / 100).round
+          - inactive = 5 - active
+          - active.times do
+            %span.active☆
+          - inactive.times do
+            %span☆
+          &nbsp;
+          = item.richness_score.round(1)
         %h2
           %a{:href => ROUTES[:page].to_s(:id => item.identifier)}
             = item.name('en')
+        .metadata
+          - item.taxon_ranks.each do |taxon_rank|
+            %span.tag.taxon-rank #{taxon_rank.downcase}
         / %p= item.content
-        - item.images.each do |image|
-          %a.img{:href => image.url}
-            %img{:src => image.thumbnail_url(:square), :title => image.title, :alt => item.name('en')}
+        .image-list
+          - item.images.each_with_index do |image, index|
+            %a.img{:class => ('only-in-gallery-mode' if index > 11), :href => image.url}
+              %img{:src => image.thumbnail_url(:square), :title => image.title, :alt => item.name('en'), :width => 69, :height => 69}

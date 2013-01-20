@@ -1,12 +1,16 @@
 %a{:href => request.referer || @search_action || '/search/list'}
   back
-%h1= @page.name('en')
-%ul.swipe-gallery
-  - @page.images.each_with_index do |image, index|
-    %li.medium
-      %a.img{:href => image.url}
-        %img{:src => image.thumbnail_url(:medium), :title => image.title}
-      %p
-        = image.description
-      - if image.source_url
-        %a{:href => image.source_url} source
+.page
+  %h1= @page.name('en')
+  %ul.swipe-gallery
+    - @page.images.each_with_index do |image, index|
+      %li.medium
+        %a.img{:href => image.url}
+          %img{:src => image.thumbnail_url(:medium), :title => image.title}
+        %p
+          = image.description
+          - if image.source_url
+            %a{:href => image.source_url} [source]
+  .texts
+    - @page.texts.each do |text|
+      = haml :text, {}, :text => text

@@ -12,9 +12,6 @@
   %body
     .top-bar
       %form.search{:action => @search_action || '/search/list'}
-        - if @toggle_link
-          %a.view_mode{:href => @toggle_link[:href]}
-            %i{:class => "img-#{@toggle_link[:next_mode]}"}
         .search-box
           <input type=search name=q results=5 autosave="m.eol/search" value="#{@q}" autofocus>
     = yield

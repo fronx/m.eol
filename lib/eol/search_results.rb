@@ -4,10 +4,14 @@ require 'eol/search_item'
 module Eol
   class SearchResults
     attr_reader :total_results,
-                :items
+                :next_url,
+                :items,
+                :raw
 
     def initialize(api, json, page_params = {}, limit=nil)
+      @raw = json
       @total_results = json['totalResults']
+      @next_url = json['next']
       items    = limit ? json['results'][0...limit] : json['results']
       page_ids = items.map { |item| item['id'] }
       @items =

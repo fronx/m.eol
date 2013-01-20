@@ -18,7 +18,7 @@ class App < Sinatra::Base
   }
 
   VIEWS = {
-    :search => ViewMode.new(%w[ list grid ]),
+    :search => ViewMode.new(%w[ list ]),
   }
 
   def init_search(mode, search_params={})
@@ -29,7 +29,7 @@ class App < Sinatra::Base
       :href => ROUTES[:search].to_s(:mode => next_mode, :q => params[:q]),
       :next_mode => next_mode,
     }
-    if params[:q]
+    if params[:q].to_s.strip != ''
       @search_results = eol.search(params[:q], search_params)
       @template = :"search_#{mode}"
     else
@@ -49,17 +49,12 @@ class App < Sinatra::Base
     haml @template
   end
 
-  get '/search/grid' do
-    init_search('grid', {:images => 3, :text => 0})
-    haml @template
-  end
-
   get '/pages/:id' do
     @q =
       if request.referer && (query = URI.parse(request.referer).query)
         Hash[URI.decode_www_form(query)]['q']
       end
-    @page = Eol::Page.load(eol, params[:id], {:images => 100, :text => 2})
+    @page = Eol::Page.load(eol, params[:id], {:images => 100, :text => 10})
     haml :page
   end
 end

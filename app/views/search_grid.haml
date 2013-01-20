@@ -1,7 +1,0 @@
-.search-results.search-grid
-  %ul#swipe-gallery
-    - @search_results.each do |item|
-      - item.images.each do |image|
-        %li
-          %a.img{:href => image.url}
-            %img{:src => image.thumbnail_url(:square), :alt => item.name('en')}

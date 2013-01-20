@@ -12,7 +12,9 @@ module Eol
                            :name,
                            :path,
                            :str_path,
-                           :hierarchy_entry
+                           :hierarchy_entry,
+                           :taxon_ranks,
+                           :richness_score
 
     attr_reader :id,
                 :title,

@@ -12,9 +12,10 @@ module Eol
     end
 
     FORMATS = {
-      :small  => '_98_68',
-      :square => '_88_88',
-      :medium => '_260_190',
+      :small        => '_98_68',
+      :small_square => '_88_88',
+      :square       => '_130_130',
+      :medium       => '_260_190',
     }
 
     def thumbnail_url(format=:square)

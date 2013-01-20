@@ -31,7 +31,7 @@ module Eol
     end
 
     def self.multi_load_for_pages!(api, pages)
-      hierarchy_entries = multi_load(api, pages.map(&:taxon_concept_id), {})
+      hierarchy_entries = multi_load(api, pages.map(&:first_taxon_concept_id).compact, {})
       pages.each do |page|
         page.hierarchy_entry =
           hierarchy_entries.detect do |entry|
@@ -60,7 +60,6 @@ module Eol
       @path            = json['ancestors']
       @taxon_rank      = json['taxonRank']
       @scientific_name = json['scientificName']
-
       # 'sourceIdentifier'
       # 'parentNameUsageID'
       # 'taxonConceptID'

@@ -5,6 +5,11 @@ require 'eol/hierarchy_entry'
 
 module Eol
   class Page
+    SUBJECTS =
+      %w[
+        Overview
+        Distribution
+      ]
     EMPTY_PARAMS =
       {
         :images       => 0,
@@ -72,7 +77,14 @@ module Eol
       @data_objects.select do |data_object|
         data_object.data_type == DataTypes.image
       end.
-        uniq(&:url).debug("images")
+        uniq(&:url)
+    end
+
+    def texts
+      @data_objects.select do |data_object|
+        (data_object.data_type == DataTypes.text) &&
+          (data_object.mime_type == 'text/html')
+      end
     end
 
     def image_by_id(id)
@@ -90,8 +102,12 @@ module Eol
       result['vernacularName'] if result
     end
 
-    def taxon_concept_id
-      @taxon_concepts.first['identifier']
+    def first_taxon_concept_id
+      @taxon_concepts.first['identifier'] if @taxon_concepts.any?
+    end
+
+    def taxon_ranks
+      @taxon_concepts.map { |tc| tc['taxonRank'] }.uniq.compact
     end
 
     def hierarchy_entries
@@ -128,6 +144,7 @@ module Eol
 end
 
 <<'RUBY'
+require 'pp'
 require 'eol/api'
 require 'eol/page'
 
