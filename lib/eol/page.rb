@@ -149,7 +149,9 @@ module Eol
       end.compact
       if result.empty?
         result = [ scientific_name ]
-        yield(scientific_name, nil)
+        if block_given?
+          yield(scientific_name, nil)
+        end
       end
       separator ? result.join(separator) : result
     end
