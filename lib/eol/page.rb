@@ -147,7 +147,10 @@ module Eol
           name
         end
       end.compact
-      result = [ scientific_name ] if result.empty?
+      if result.empty?
+        result = [ scientific_name ]
+        yield(scientific_name, nil)
+      end
       separator ? result.join(separator) : result
     end
   end
