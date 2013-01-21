@@ -80,10 +80,11 @@ module Eol
         uniq(&:url)
     end
 
-    def texts
+    def texts(langs)
       @data_objects.select do |data_object|
         (data_object.data_type == DataTypes.text) &&
-          (data_object.mime_type == 'text/html')
+          (data_object.mime_type == 'text/html') &&
+            langs.include?(data_object.language)
       end
     end
 

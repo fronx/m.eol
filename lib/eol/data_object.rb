@@ -6,7 +6,9 @@ module Eol
                 :description,
                 :mime_type,
                 :source_url,
-                :data_type
+                :data_type,
+                :language,
+                :rights_holder
 
     def initialize(json)
       @identifier    = json['identifier']
@@ -16,6 +18,8 @@ module Eol
       @mime_type     = json['mimeType']
       @source_url    = json['source']   # link here!
       @data_type     = json['dataType'] # data type uri
+      @language      = json['language']
+      @rights_holder = json['rightsHolder']
     end
   end
 end

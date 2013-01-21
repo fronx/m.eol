@@ -1,5 +1,10 @@
-%h3
-  %a.source{:href => text.source_url}
-    = text.title
-
-= text.description
+.text{:id => text.identifier}
+  %h3
+    %a.source{:href => text.source_url}
+      = text.title
+  .metadata
+    - if text.rights_holder
+      .copyright
+        © #{text.rights_holder}
+  .description
+    = text.description

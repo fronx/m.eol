@@ -66,7 +66,7 @@ class App < Sinatra::Base
       if request.referer && (query = URI.parse(request.referer).query)
         Hash[URI.decode_www_form(query)]['q']
       end
-    @page = Eol::Page.load(eol, params[:id], {:images => 100, :text => 10})
+    @page = Eol::Page.load(eol, params[:id], {:images => 100, :text => 75})
     haml :page
   end
 end
